@@ -571,12 +571,26 @@ parseDiffs : ParserNew.Parser (List Float)
 parseDiffs =
     ParserNew.inContext "diffs" <|
         oneOf
-            [ ( ParserNew.succeed identity
-                |. parseBar
-              )
-                |> ParserNew.andThen (\_ -> ParserNew.succeed [])
+            [ parseEmptyDiffs
+            , parseDiffsEnd
             , ParserNew.andThen (\f -> diffsHelp [ f ]) parseDiff
             ]
+
+
+parseEmptyDiffs : ParserNew.Parser (List Float)
+parseEmptyDiffs =
+    (ParserNew.succeed identity
+        |. parseBar
+    )
+        |> ParserNew.andThen (\_ -> ParserNew.succeed [])
+
+
+parseDiffsEnd : ParserNew.Parser (List Float)
+parseDiffsEnd =
+    (ParserNew.succeed identity
+        |. ParserNew.end
+    )
+        |> ParserNew.andThen (\_ -> ParserNew.succeed [])
 
 
 diffsHelp : List Float -> ParserNew.Parser (List Float)
