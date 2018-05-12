@@ -13,6 +13,9 @@ import Combine
 source =
     "Africa/Bissau|LMT -01 GMT|12.k 10 0|012|-2ldWV.E 2xonV.E|39e4"
 
+source2 =
+    "Atlantic/South_Georgia|-02|20|0||30"
+
 
 expectedAbbrevs =
     [ "LMT", "-01", "GMT" ]
