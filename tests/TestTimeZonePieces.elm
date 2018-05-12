@@ -17,6 +17,14 @@ source2 =
     "Atlantic/South_Georgia|-02|20|0||30"
 
 
+source3 =
+    "HST|HST|a0|0|"
+
+
+which =
+    source2
+
+
 expectedAbbrevs =
     [ "LMT", "-01", "GMT" ]
 
@@ -94,9 +102,21 @@ packedTimeZoneTupleTest =
 unpackNewTest : Test
 unpackNewTest =
     describe "Time.TimeZone.unpackNew"
-        [ test "New" <|
+        [ test "old" <|
             \() ->
-                case Time.TimeZone.unpackNew source of
+                case Time.TimeZone.unpack which of
+                    Ok value ->
+                        let
+                            v =
+                                Debug.log "TimeZone" value
+                        in
+                            Expect.pass
+
+                    Err msg ->
+                        fail (toString msg)
+        , test "New" <|
+            \() ->
+                case Time.TimeZone.unpackNew which of
                     Ok value ->
                         let
                             v =
